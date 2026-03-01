@@ -60,7 +60,6 @@ def stream_answer(events) -> tuple[str, list[dict[str, Any]]]:
         Panel(Markdown(""), title="[bold cyan]Answer[/bold cyan]", border_style="cyan", padding=(1, 2), width=PANEL_WIDTH),
         console=console,
         refresh_per_second=8,
-        vertical_overflow="visible",
     ) as live:
         for event in events:
             event_type = event.get("type", "")

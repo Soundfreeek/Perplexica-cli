@@ -6,8 +6,8 @@ A terminal client for [Perplexica](https://github.com/ItzCrazyKns/Perplexica), t
 
 - **Single query mode** — `perplexica search "What is Linux?"`
 - **Interactive chat** — `perplexica chat` with multi-turn conversation history
-- **Streaming output** — answers appear token-by-token in real time
-- **Rich terminal rendering** — markdown, colored output, source tables
+- **Streaming output** — answers render progressively with live markdown formatting
+- **Rich terminal rendering** — markdown panels, syntax-highlighted code blocks, colored output, source tables
 - **Multiple sources** — web, academic, discussions
 - **Optimization modes** — speed, balanced, quality
 
@@ -23,7 +23,15 @@ A terminal client for [Perplexica](https://github.com/ItzCrazyKns/Perplexica), t
 
 ```bash
 cd /path/to/this/project
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -e .
+```
+
+Optionally, add a shell alias so `perplexica` works without activating the venv:
+
+```bash
+echo "alias perplexica='/path/to/this/project/.venv/bin/perplexica'" >> ~/.zshrc
 ```
 
 ## Setup

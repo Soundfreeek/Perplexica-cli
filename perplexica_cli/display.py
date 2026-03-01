@@ -10,6 +10,8 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
+PANEL_WIDTH = 100
+
 console = Console()
 err_console = Console(stderr=True)
 
@@ -25,7 +27,7 @@ def print_info(msg: str) -> None:
 def print_answer(message: str) -> None:
     """Render a complete answer as a markdown panel."""
     md = Markdown(message)
-    panel = Panel(md, title="[bold cyan]Answer[/bold cyan]", border_style="cyan", padding=(1, 2))
+    panel = Panel(md, title="[bold cyan]Answer[/bold cyan]", border_style="cyan", padding=(1, 2), width=PANEL_WIDTH)
     console.print(panel)
 
 
@@ -55,7 +57,7 @@ def stream_answer(events) -> tuple[str, list[dict[str, Any]]]:
     sources: list[dict[str, Any]] = []
 
     with Live(
-        Panel(Markdown(""), title="[bold cyan]Answer[/bold cyan]", border_style="cyan", padding=(1, 2)),
+        Panel(Markdown(""), title="[bold cyan]Answer[/bold cyan]", border_style="cyan", padding=(1, 2), width=PANEL_WIDTH),
         console=console,
         refresh_per_second=8,
         vertical_overflow="visible",
@@ -74,6 +76,7 @@ def stream_answer(events) -> tuple[str, list[dict[str, Any]]]:
                         title="[bold cyan]Answer[/bold cyan]",
                         border_style="cyan",
                         padding=(1, 2),
+                        width=PANEL_WIDTH,
                     )
                 )
             elif event_type == "done":

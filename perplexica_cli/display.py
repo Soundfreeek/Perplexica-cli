@@ -47,30 +47,38 @@ def print_sources(sources: list[dict[str, Any]]) -> None:
 
 
 def stream_answer(events) -> tuple[str, list[dict[str, Any]]]:
-    """Stream answer tokens to the terminal in real time.
+    """Stream answer tokens to the terminal in real time with markdown rendering.
 
     Returns the full message and sources when done.
     """
     full_message = ""
     sources: list[dict[str, Any]] = []
 
-    console.print(Panel.fit("[bold cyan]Answer[/bold cyan]", border_style="cyan"))
+    with Live(
+        Panel(Markdown(""), title="[bold cyan]Answer[/bold cyan]", border_style="cyan", padding=(1, 2)),
+        console=console,
+        refresh_per_second=8,
+        vertical_overflow="visible",
+    ) as live:
+        for event in events:
+            event_type = event.get("type", "")
+            data = event.get("data")
 
-    for event in events:
-        event_type = event.get("type", "")
-        data = event.get("data")
+            if event_type == "sources" and isinstance(data, list):
+                sources = data
+            elif event_type == "response" and isinstance(data, str):
+                full_message += data
+                live.update(
+                    Panel(
+                        Markdown(full_message),
+                        title="[bold cyan]Answer[/bold cyan]",
+                        border_style="cyan",
+                        padding=(1, 2),
+                    )
+                )
+            elif event_type == "done":
+                break
 
-        if event_type == "sources" and isinstance(data, list):
-            sources = data
-        elif event_type == "response" and isinstance(data, str):
-            full_message += data
-            sys.stdout.write(data)
-            sys.stdout.flush()
-        elif event_type == "done":
-            break
-
-    sys.stdout.write("\n")
-    sys.stdout.flush()
     return full_message, sources
 
 

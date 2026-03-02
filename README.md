@@ -2,6 +2,8 @@
 
 A terminal client for [Perplexica](https://github.com/ItzCrazyKns/Perplexica), the AI-powered search engine.
 
+![Perplexica CLI screenshot](screenshot.png)
+
 ## Features
 
 - **Single query mode** — `perplexica search "What is Linux?"`
